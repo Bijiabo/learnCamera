@@ -45,12 +45,21 @@
                                             <action selector="tapSwitchCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BZo-Hu-AiR"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wAs-r9-jjn">
+                                        <rect key="frame" x="20" y="35" width="70" height="30"/>
+                                        <state key="normal" title="takePhoto"/>
+                                        <connections>
+                                            <action selector="tapTakePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XIZ-7i-QaD"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20290336879432624" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="b1c-dh-xJE" secondAttribute="trailing" constant="20" id="5lf-gD-moX"/>
+                                    <constraint firstItem="wAs-r9-jjn" firstAttribute="leading" secondItem="A1X-pR-IdF" secondAttribute="leading" constant="20" id="9mr-AH-HMa"/>
                                     <constraint firstItem="b1c-dh-xJE" firstAttribute="centerY" secondItem="A1X-pR-IdF" secondAttribute="centerY" id="Bwc-wx-eIv"/>
                                     <constraint firstItem="t9H-9U-N88" firstAttribute="centerY" secondItem="A1X-pR-IdF" secondAttribute="centerY" id="DVC-0v-qDu"/>
+                                    <constraint firstItem="wAs-r9-jjn" firstAttribute="centerY" secondItem="A1X-pR-IdF" secondAttribute="centerY" id="VB4-dj-qIQ"/>
                                     <constraint firstItem="t9H-9U-N88" firstAttribute="centerX" secondItem="A1X-pR-IdF" secondAttribute="centerX" id="jJr-Rb-1jL"/>
                                     <constraint firstAttribute="height" constant="100" id="ntJ-RK-Eus"/>
                                 </constraints>
@@ -78,6 +87,7 @@
                         <outlet property="panelView" destination="A1X-pR-IdF" id="Dwn-4A-TC1"/>
                         <outlet property="previewView" destination="bVf-jR-ViH" id="h9k-v9-FWb"/>
                         <outlet property="switchCameraButton" destination="b1c-dh-xJE" id="xie-7I-C0u"/>
+                        <outlet property="takePhotoButton" destination="wAs-r9-jjn" id="pLO-8w-MOX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
