@@ -40,7 +40,7 @@
                                         <state key="normal" title="switchC"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.69921875" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20290336879432624" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="b1c-dh-xJE" secondAttribute="trailing" constant="20" id="5lf-gD-moX"/>
                                     <constraint firstItem="b1c-dh-xJE" firstAttribute="centerY" secondItem="A1X-pR-IdF" secondAttribute="centerY" id="Bwc-wx-eIv"/>

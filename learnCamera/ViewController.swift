@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         addCaptrueObservers()
+        addTapGestureRecognizerToPreview()
     }
     
     deinit {
@@ -54,9 +55,15 @@ class ViewController: UIViewController {
         // add inputs
         var cameraInput: AVCaptureDeviceInput?
         if let camera = camera_back {
-            if let input = try? AVCaptureDeviceInput(device: camera) {cameraInput = input}
+            if let input = try? AVCaptureDeviceInput(device: camera) {
+                cameraInput = input
+                currentDevice = camera
+            }
         } else if let camera = camera_font {
-            if let input = try? AVCaptureDeviceInput(device: camera) {cameraInput = input}
+            if let input = try? AVCaptureDeviceInput(device: camera) {
+                cameraInput = input
+                currentDevice = camera
+            }
         }
         
         if let cameraInput = cameraInput {
@@ -157,6 +164,8 @@ class ViewController: UIViewController {
         return AVCaptureDevice.devices()
     }
     
+    var currentDevice: AVCaptureDevice?
+    
     func checkDevices(devices: [AnyObject]) {
         guard let deivceList = devices as? [AVCaptureDevice] else {return}
         
@@ -205,5 +214,41 @@ class ViewController: UIViewController {
         }
         return nil
     }
+    
+    // MARK: - user actions
+    private func addTapGestureRecognizerToPreview() {
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: Selector("userTappedPreview:")
+        )
+        previewView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func userTappedPreview(gesture: UITapGestureRecognizer) {
+        guard let gestureView = gesture.view else {return}
+        
+        let locationInView = gesture.locationInView(gestureView)
+        let focusPoint: CGPoint = CGPoint(
+            x: locationInView.x/gestureView.frame.size.width , y:
+            locationInView.y/gestureView.frame.size.width
+        )
+        setDeviceFocusPoint(focusPoint)
+    }
+    
+    private func setDeviceFocusPoint(point: CGPoint) {
+        guard let currentDevice = currentDevice else {return}
+        
+        if currentDevice.focusPointOfInterestSupported == true {
+            do {
+                try currentDevice.lockForConfiguration()
+                currentDevice.focusPointOfInterest = point
+                currentDevice.focusMode = AVCaptureFocusMode.ContinuousAutoFocus
+                currentDevice.unlockForConfiguration()
+            } catch {
+                return
+            }
+        }
+    }
+    
 }
 
