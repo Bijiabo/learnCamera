@@ -232,21 +232,48 @@ class ViewController: UIViewController {
             x: locationInView.x/gestureView.frame.size.width , y:
             locationInView.y/gestureView.frame.size.width
         )
-        setDeviceFocusPoint(focusPoint)
+        setDeviceFocusPoint(pointInPercentage: focusPoint, pointInCGFlot: locationInView)
     }
     
-    private func setDeviceFocusPoint(point: CGPoint) {
+    private func setDeviceFocusPoint(pointInPercentage pointInPercentage: CGPoint, pointInCGFlot: CGPoint) {
         guard let currentDevice = currentDevice else {return}
         
         if currentDevice.focusPointOfInterestSupported == true {
             do {
                 try currentDevice.lockForConfiguration()
-                currentDevice.focusPointOfInterest = point
+                currentDevice.focusPointOfInterest = pointInPercentage
                 currentDevice.focusMode = AVCaptureFocusMode.ContinuousAutoFocus
                 currentDevice.unlockForConfiguration()
             } catch {
                 return
             }
+            
+            // add focus vision tip
+            previewView.viewWithTag(2048)?.removeFromSuperview()
+            
+            let visionTipViewWidth_half: CGFloat = 60.0/2.0
+            let visionTipView: UIView = UIView(frame: CGRect(x: pointInCGFlot.x-visionTipViewWidth_half, y: pointInCGFlot.y-visionTipViewWidth_half, width: visionTipViewWidth_half*2.0, height: visionTipViewWidth_half*2.0))
+            visionTipView.tag = 2048
+            visionTipView.backgroundColor = UIColor.clearColor()
+            visionTipView.layer.borderColor = UIColor(red:0.2, green:0.66, blue:0.9, alpha:1).CGColor
+            visionTipView.layer.borderWidth = 1.0
+            visionTipView.alpha = 0
+            visionTipView.userInteractionEnabled = false
+            previewView.addSubview(visionTipView)
+            
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                visionTipView.alpha = 1.0
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        UIView.animateWithDuration(0.5, animations: { () -> Void in
+                            visionTipView.alpha = 0
+                            }, completion: { (finished) -> Void in
+                                if finished {
+                                    visionTipView.removeFromSuperview()
+                                }
+                        })
+                    }
+            })
         }
     }
     
