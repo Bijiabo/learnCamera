@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import ImageIO
 import CoreGraphics
+import Photos
 
 class ViewController: UIViewController {
 
@@ -86,7 +87,7 @@ class ViewController: UIViewController {
         // add outputs
         // add movie output
         let movieOutput: AVCaptureMovieFileOutput = AVCaptureMovieFileOutput()
-        let maxDuration: CMTime = CMTimeMake(1000*5, 1000)
+        let maxDuration: CMTime = CMTimeMake(1000*15, 1000)
         movieOutput.maxRecordedDuration = maxDuration
         if session.canAddOutput(movieOutput) {
             session.addOutput(movieOutput)
@@ -424,15 +425,15 @@ class ViewController: UIViewController {
                 print(resultExifAttachments)
                 
                 let image = UIImage(data: AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer))!
-                UIImageWriteToSavedPhotosAlbum(image, self, Selector("savePhotoToAlbumComplete:"), nil)
+                UIImageWriteToSavedPhotosAlbum(image, self, Selector("savePhotoToAlbumComplete:didFinishSavingWithError:contextInfo:"), nil)
                 
             } else {
                 //TODO: tip user error
             }
         })
     }
-    
-    func savePhotoToAlbumComplete(sender: AnyObject) {
+
+    func savePhotoToAlbumComplete(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         print("savePhotoToAlbumComplete")
     }
 
@@ -445,46 +446,6 @@ class ViewController: UIViewController {
         let DateInFormat = dateFormatter.stringFromDate(todaysDate)
         
         return DateInFormat
-    }
-    
-    // MARK: - data function
-    
-    // Create a UIImage from sample buffer data
-    
-    private func imageFromSampleBuffer(sampleBuffer: CMSampleBufferRef) -> UIImage? {
-        // Get a CMSampleBuffer's Core Video image buffer for the media data
-        guard let imageBuffer: CVImageBufferRef = CMSampleBufferGetImageBuffer(sampleBuffer) else {return nil}
-        
-        // Lock the base address of the pixel buffer
-        CVPixelBufferLockBaseAddress(imageBuffer, 0)
-        
-        // Get the number of bytes per row for the pixel buffer
-        let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)
-        
-        // Get the number of bytes per row for the pixel buffer
-        let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer)
-        
-        // Get the pixel buffer width and height
-        let width = CVPixelBufferGetWidth(imageBuffer)
-        let height = CVPixelBufferGetHeight(imageBuffer)
-        
-        // Create a device-dependent RGB color space
-        let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
-        
-        // Create a bitmap graphics context with the sample buffer data
-        let context: CGContextRef = CGBitmapContextCreate(baseAddress, width, height, 8,
-            bytesPerRow, colorSpace, CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue)!
-        
-        // Create a Quartz image from the pixel data in the bitmap graphics context
-        let quartzImage: CGImageRef = CGBitmapContextCreateImage(context)!
-        // Unlock the pixel buffer
-        CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-        
-        // Create an image object from the Quartz image
-        let image: UIImage = UIImage(CGImage: quartzImage)
-        
-        return (image)
-        
     }
 }
 
@@ -511,7 +472,50 @@ extension ViewController: AVCaptureFileOutputRecordingDelegate {
         
         if !recordedSuccessfully {
             print("record unsuccessful.")
+        } else {
+            saveMovieWithUrl(outputFileURL)
         }
+    }
+    
+    func saveMovieWithUrl(url: NSURL) {
+        
+        PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+            let createAssetRequest: PHAssetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(url)!
+            let placeholder = createAssetRequest.placeholderForCreatedAsset!
+            
+            }) { (success, error) -> Void in
+                if success {
+                    print("success")
+                } else {
+                    print(error)
+                }
+        }
+        /*
+        
+        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+            let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(url)
+            let assetPlaceholder = assetChangeRequest!.placeholderForCreatedAsset
+            let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
+            albumChangeRequest!.addAssets([assetPlaceholder!])
+            }, completionHandler: { (success: Bool, error: NSError?) in
+                
+                if (success) {
+                    print("Finished saving to camera roll, ready to delete from temp.")
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        NSNotificationCenter.defaultCenter().postNotificationName("Finished Saving To Camera Roll", object: nil)
+                    }
+                    
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(tempFileToDeleteOnCompletion)
+                        print("Deleted")
+                    } catch { print("Couldn't Delete") }
+                    
+                    UIApplication.sharedApplication().endBackgroundTask(savingToCameraRollBackgroundTask)
+                }
+                
+        })
+        */
     }
 }
 

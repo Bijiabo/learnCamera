@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471712433.21036"
+            timestampString = "471714747.63061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
             landmarkName = "setDeviceFocusPoint(pointInPercentage:pointInCGFlot:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471712433.21036"
+            timestampString = "471714747.63061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "tapSwitchCameraButton(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471712433.21036"
+            timestampString = "471714747.63061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471713167.00526"
+            timestampString = "471714747.63061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
             landmarkName = "captureOutput(_:didStartRecordingToOutputFileAtURL:fromConnections:)"
             landmarkType = "5">
             <Actions>
