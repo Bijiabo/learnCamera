@@ -33,11 +33,19 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         setupViews()
+        setupCaptureSession()
+        setupPreview()
         
         // check devices
         //checkDevices(devices)
-        
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    private func setupViews() {
+        let captrueButtonLayer = captureButton.layer
+        captrueButtonLayer.cornerRadius = captrueButtonLayer.frame.size.width/2.0
+    }
+    
+    private func setupCaptureSession() {
         session = AVCaptureSession()
         
         // configuring session
@@ -80,16 +88,12 @@ class ViewController: UIViewController {
         
         // start data flow by sending the session a startRunning message
         session.startRunning()
-        
-        // showing the user what's being record
+    }
+    
+    private func setupPreview() {
         let capturePreviewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
         capturePreviewLayer.frame = view.bounds
         previewView.layer.addSublayer(capturePreviewLayer)
-    }
-    
-    private func setupViews() {
-        let captrueButtonLayer = captureButton.layer
-        captrueButtonLayer.cornerRadius = captrueButtonLayer.frame.size.width/2.0
     }
 
     // MARK: - session observers
@@ -336,7 +340,6 @@ class ViewController: UIViewController {
                     session.commitConfiguration()
                     break
                 }
-                
             }
         }
     }
