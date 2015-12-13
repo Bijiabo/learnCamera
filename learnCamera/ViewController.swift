@@ -18,9 +18,14 @@ class ViewController: UIViewController {
     
     var session: AVCaptureSession!
     
+    var savePath: String = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        savePath = NSHomeDirectory().stringByAppendingString("/Documents")
+        
+        setupViews()
         addCaptrueObservers()
         addTapGestureRecognizerToPreview()
     }
@@ -32,7 +37,6 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupViews()
         setupCaptureSession()
         setupPreview()
         
@@ -78,6 +82,8 @@ class ViewController: UIViewController {
         
         // add outputs
         let movieOutput: AVCaptureMovieFileOutput = AVCaptureMovieFileOutput()
+        let maxDuration: CMTime = CMTimeMake(1000*5, 1000)
+        movieOutput.maxRecordedDuration = maxDuration
         if session.canAddOutput(movieOutput) {
             session.addOutput(movieOutput)
         } else {
@@ -344,6 +350,39 @@ class ViewController: UIViewController {
         }
     }
     
+    private var recording: Bool = false
+    @IBAction func tapCaptureButton(sender: AnyObject) {
+        let saveFileURL: NSURL = NSURL(fileURLWithPath: savePath).URLByAppendingPathComponent("\(currentShortDate()).mp4")
+        
+        if !recording {
+            session.outputs[0].startRecordingToOutputFileURL(saveFileURL, recordingDelegate: self)
+        } else {
+            session.outputs[0].stopRecording()
+        }
+        
+        recording = !recording
+    }
     
+    // MARK: - date function
+    
+    func currentShortDate() -> String {
+        let todaysDate = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy_HH-mm-ss"
+        let DateInFormat = dateFormatter.stringFromDate(todaysDate)
+        
+        return DateInFormat
+    }
+    
+}
+
+extension ViewController: AVCaptureFileOutputRecordingDelegate {
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+    }
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
+        
+    }
 }
 

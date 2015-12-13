@@ -34,6 +34,9 @@
                                         <state key="normal" title="Capture">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="tapCaptureButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1GF-Nf-BBH"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1c-dh-xJE">
                                         <rect key="frame" x="525" y="35" width="55" height="30"/>
