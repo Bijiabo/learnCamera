@@ -35,8 +35,8 @@ class ViewController: UIViewController {
         // configuring session
         session.beginConfiguration()
         
-        if session.canSetSessionPreset(AVCaptureSessionPresetLow) {
-            session.sessionPreset = AVCaptureSessionPresetLow
+        if session.canSetSessionPreset(AVCaptureSessionPresetHigh) {
+            session.sessionPreset = AVCaptureSessionPresetHigh
         } else {
             // Handle the failure.
             print("Device does not support set AVCaptureSession preset to be AVCaptureSessionPresetLow")
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         
         session.commitConfiguration()
         
-        // Add inputs and outputs.
+        // add inputs
         var cameraInput: AVCaptureDeviceInput?
         if let camera = camera_back {
             if let input = try? AVCaptureDeviceInput(device: camera) {cameraInput = input}
@@ -56,8 +56,17 @@ class ViewController: UIViewController {
             session.addInput(cameraInput)
         }
         
+        // add outputs
+        let movieOutput: AVCaptureMovieFileOutput = AVCaptureMovieFileOutput()
+        if session.canAddOutput(movieOutput) {
+            session.addOutput(movieOutput)
+        } else {
+            print("capture session does not support add AVCaptureMoviceFileOutput.")
+        }
+        
         // showing the user what's being record
         let capturePreviewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
+        capturePreviewLayer.frame = view.frame
         view.layer.addSublayer(capturePreviewLayer)
         
         // start data flow by sending the session a startRunning message
