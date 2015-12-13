@@ -11,6 +11,11 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var panelView: UIView!
+    @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var switchCameraButton: UIButton!
+    
     var session: AVCaptureSession!
     
     override func viewDidLoad() {
@@ -25,6 +30,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        setupViews()
         
         // check devices
         //checkDevices(devices)
@@ -66,11 +73,16 @@ class ViewController: UIViewController {
         
         // showing the user what's being record
         let capturePreviewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-        capturePreviewLayer.frame = view.frame
-        view.layer.addSublayer(capturePreviewLayer)
+        capturePreviewLayer.frame = view.bounds
+        previewView.layer.addSublayer(capturePreviewLayer)
         
         // start data flow by sending the session a startRunning message
         session.startRunning()
+    }
+    
+    private func setupViews() {
+        let captrueButtonLayer = captureButton.layer
+        captrueButtonLayer.cornerRadius = captrueButtonLayer.frame.size.width/2.0
     }
 
     // MARK: - session observers

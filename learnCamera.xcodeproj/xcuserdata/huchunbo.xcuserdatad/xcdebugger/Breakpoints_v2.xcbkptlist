@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471635912.114739"
+            timestampString = "471675318.097494"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
             <Actions>
@@ -35,11 +35,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471635944.533655"
+            timestampString = "471675318.097494"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
             <Actions>
@@ -60,11 +60,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471635962.091036"
+            timestampString = "471675318.097494"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
             <Actions>
