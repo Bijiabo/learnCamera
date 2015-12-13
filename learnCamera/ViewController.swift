@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             print("Device does not support set AVCaptureSession preset to be AVCaptureSessionPresetLow")
         }
         
-        session.commitConfiguration()
+        
         
         // add inputs
         var cameraInput: AVCaptureDeviceInput?
@@ -78,13 +78,15 @@ class ViewController: UIViewController {
             print("capture session does not support add AVCaptureMoviceFileOutput.")
         }
         
+        session.commitConfiguration()
+        
+        // start data flow by sending the session a startRunning message
+        session.startRunning()
+        
         // showing the user what's being record
         let capturePreviewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
         capturePreviewLayer.frame = view.bounds
         previewView.layer.addSublayer(capturePreviewLayer)
-        
-        // start data flow by sending the session a startRunning message
-        session.startRunning()
     }
     
     private func setupViews() {
