@@ -85,12 +85,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "learnCamera/ViewController.swift"
-            timestampString = "471693737.622784"
+            timestampString = "471697794.251864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
-            landmarkName = "setDeviceFocusPoint(_:)"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "setDeviceFocusPoint(pointInPercentage:pointInCGFlot:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "learnCamera/ViewController.swift"
+            timestampString = "471698616.977711"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "tapSwitchCameraButton(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

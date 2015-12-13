@@ -38,6 +38,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1c-dh-xJE">
                                         <rect key="frame" x="525" y="35" width="55" height="30"/>
                                         <state key="normal" title="switchC"/>
+                                        <connections>
+                                            <action selector="tapSwitchCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BZo-Hu-AiR"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20290336879432624" colorSpace="calibratedRGB"/>

@@ -57,12 +57,12 @@ class ViewController: UIViewController {
         if let camera = camera_back {
             if let input = try? AVCaptureDeviceInput(device: camera) {
                 cameraInput = input
-                currentDevice = camera
+                currentCameraDevice = camera
             }
         } else if let camera = camera_font {
             if let input = try? AVCaptureDeviceInput(device: camera) {
                 cameraInput = input
-                currentDevice = camera
+                currentCameraDevice = camera
             }
         }
         
@@ -164,7 +164,20 @@ class ViewController: UIViewController {
         return AVCaptureDevice.devices()
     }
     
-    var currentDevice: AVCaptureDevice?
+    var cameraDevices: [AVCaptureDevice] {
+        guard let deivceList = devices as? [AVCaptureDevice] else {return [AVCaptureDevice]()}
+
+        var cameras = [AVCaptureDevice]()
+        
+        for device in deivceList {
+            if device.hasMediaType(AVMediaTypeVideo) {
+                cameras.append(device)
+            }
+        }
+        return cameras
+    }
+    
+    var currentCameraDevice: AVCaptureDevice?
     
     func checkDevices(devices: [AnyObject]) {
         guard let deivceList = devices as? [AVCaptureDevice] else {return}
@@ -236,7 +249,7 @@ class ViewController: UIViewController {
     }
     
     private func setDeviceFocusPoint(pointInPercentage pointInPercentage: CGPoint, pointInCGFlot: CGPoint) {
-        guard let currentDevice = currentDevice else {return}
+        guard let currentDevice = currentCameraDevice else {return}
         
         if currentDevice.focusPointOfInterestSupported == true {
             do {
@@ -276,6 +289,45 @@ class ViewController: UIViewController {
             })
         }
     }
+    
+    @IBAction func tapSwitchCameraButton(sender: AnyObject) {
+        if cameraDevices.count < 2 {return}
+        
+        var previousCameraInput: AVCaptureDeviceInput?
+        
+        for input in session.inputs {
+            guard let input = input as? AVCaptureDeviceInput else {continue}
+            if input.device == currentCameraDevice {
+                previousCameraInput = input
+                break
+            }
+        }
+        
+        for camera in cameraDevices {
+            if currentCameraDevice != camera {
+                if let newInput = try? AVCaptureDeviceInput(device: camera)
+                {
+                    session.beginConfiguration()
+                    
+                    if let previousCameraInput = previousCameraInput {
+                        session.removeInput(previousCameraInput)
+                    }
+                    
+                    if session.canAddInput(newInput) {
+                        session.addInput(newInput)
+                        currentCameraDevice = camera
+                    } else {
+                        session.addInput(previousCameraInput)
+                    }
+                    
+                    session.commitConfiguration()
+                }
+                return
+            }
+        }
+        
+    }
+    
     
 }
 
